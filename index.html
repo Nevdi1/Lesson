@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Plan Lekcji</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+
+	<body>
+		<div class="container">
+			<aside class="sidebar">
+				<nav class="nav-links">
+					<a href="#" id="link-TP" class="active" onclick="switchPlan('TP')">TP</a>
+					<a href="#" id="link-TI" onclick="switchPlan('TI')">TI</a>
+					<a href="#" id="link-BK" onclick="switchPlan('BK')">BK</a>
+				</nav>
+				<div class="school-logos">
+					<a href="https://zsppuck.edupage.org/timetable/view.php?num=102&class=-334" target="_blank"
+						class="logo-btn">🏫</a>
+					<a href="https://zsppuck.edupage.org/substitution/" target="_blank" class="logo-btn">🎓</a>
+				</div>
+			</aside>
+
+			<main class="content">
+				<header class="header">
+					<h1 id="page-title">TP</h1>
+				</header>
+
+				<div class="days-grid">
+					<button class="day-btn" onclick="showDay('pn')">Pn</button>
+					<button class="day-btn" onclick="showDay('wt')">Wt</button>
+					<button class="day-btn" onclick="showDay('sr')">Śr</button>
+					<button class="day-btn" onclick="showDay('cz')">Cz</button>
+					<button class="day-btn" onclick="showDay('pi')">Pi</button>
+				</div>
+
+				<div id="schedule-data" class="schedule-container"></div>
+
+				<div id="room-info" class="room-popup"><span>-</span></div>
+			</main>
+		</div>
+
+		<script>
+			const plans = {
+				'TP': {
+					'pn': [{ n: 1, t: '8:00', m: 'Ed zdr', r: '105 C', c: 'purple' }, { n: 2, t: '8:50', m: 'BIZ', r: '020 A', c: 'brown' }, { n: 3, t: '9:45', m: 'H', r: '104 C', c: 'green' }, { n: 4, t: '10:40', m: 'WF', r: 'SG1', c: 'purple' }, { n: 5, t: '11:40', m: 'R', r: '110 C', c: 'green' }, { n: 6, t: '12:35', m: 'Fot Art', r: '017 C', c: 'purple' }],
+					'wt': [{ n: 1, t: '8:00', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 2, t: '8:50', m: 'JP', r: '109 A', c: 'brown' }, { n: 3, t: '9:45', m: 'JP', r: '109 A', c: 'brown' }, { n: 4, t: '10:40', m: 'WIAI', r: '113 A', c: 'green' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'SO', r: '114 A', c: 'green' }, { n: 7, t: '13:30', m: 'JN', r: '109 C', c: 'green' }],
+					'sr': [{ n: 1, t: '8:00', m: 'ZZW', r: '202 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG1', c: 'purple' }, { n: 3, t: '9:45', m: 'WF', r: 'SG1', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'brown' }, { n: 7, t: '13:30', m: 'I', r: '111 A', c: 'green' }],
+					'cz': [{ n: 1, t: '8:00', m: 'SK', r: '113 A', c: 'green' }, { n: 2, t: '8:50', m: 'JN', r: '109 C', c: 'green' }, { n: 3, t: '9:45', m: 'CH', r: '105 C', c: 'green' }, { n: 4, t: '10:40', m: 'F', r: '107 A', c: 'brown' }, { n: 5, t: '11:40', m: 'JA', r: '209 K', c: 'purple' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '107 A', c: 'green' }, { n: 8, t: '14:20', m: 'WIAI', r: '113 A', c: 'green' }],
+					'pi': [{ n: 1, t: '8:00', m: 'G', r: '105 C', c: 'green' }, { n: 2, t: '8:50', m: 'SBD', r: '111 A', c: 'green' }, { n: 3, t: '9:45', m: 'SK', r: '113 A', c: 'green' }, { n: 4, t: '10:40', m: 'EDB', r: '6 w', c: 'brown' }, { n: 5, t: '11:40', m: 'SO', r: '114 A', c: 'green' }, { n: 6, t: '12:35', m: 'WIAI', r: '113 A', c: 'green' }, { n: 7, t: '13:30', m: 'JA', r: '207 C', c: 'purple' }]
+				},
+				'TI': {
+					'pn': [{ n: 1, t: '8:00', m: 'Ed zdr', r: '105 C', c: 'purple' }, { n: 2, t: '8:50', m: 'BIZ', r: '020 A', c: 'brown' }, { n: 3, t: '9:45', m: 'H', r: '104 C', c: 'green' }, { n: 4, t: '10:40', m: 'WF', r: 'SG1/SG6', c: 'purple' }, { n: 5, t: '11:40', m: 'R', r: '110 C', c: 'green' }, { n: 6, t: '12:35', m: 'Fot Art', r: '017 C', c: 'purple' }, { n: 7, t: '13:30', m: 'JN', r: '202 C', c: 'green' }, { n: 8, t: '14:20', m: 'JA', r: '108 C', c: 'purple' }],
+					'wt': [{ n: 2, t: '8:50', m: 'JP', r: '109 A', c: 'brown' }, { n: 3, t: '9:45', m: 'JP', r: '109 A', c: 'brown' }, { n: 4, t: '10:40', m: 'SUTK', r: '114 A', c: 'green' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JA', r: '108 C', c: 'purple' }, { n: 7, t: '13:30', m: 'SO', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'DINU TK', r: '114 A', c: 'green' }],
+					'sr': [{ n: 1, t: '8:00', m: 'ZZW', r: '202 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG1/SG4', c: 'purple' }, { n: 3, t: '9:45', m: 'WF', r: 'SG1/SG4', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'brown' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
+					'cz': [{ n: 1, t: '8:00', m: 'JN', r: '202 C', c: 'green' }, { n: 2, t: '8:50', m: 'DINU TK', r: '105 A', c: 'green' }, { n: 3, t: '9:45', m: 'CH', r: '105 C', c: 'green' }, { n: 4, t: '10:40', m: 'F', r: '107 A', c: 'brown' }, { n: 5, t: '11:40', m: 'SO', r: '107 A', c: 'green' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }, { n: 7, t: '13:30', m: 'I', r: '108 C', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
+					'pi': [{ n: 1, t: '8:00', m: 'G', r: '105 C', c: 'green' }, { n: 2, t: '8:50', m: 'SO', r: '114 A', c: 'green' }, { n: 3, t: '9:45', m: 'SO', r: '114 A', c: 'green' }, { n: 4, t: '10:40', m: 'EDB', r: '6 w', c: 'brown' }, { n: 5, t: '11:40', m: 'I', r: '108 C', c: 'green' }, { n: 6, t: '12:35', m: 'UTKiZ BHP', r: '114 A', c: 'green' }]
+				},
+				'BK': {
+					'pn': [{ n: 1, t: '8:00', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 2, t: '8:50', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 3, t: '9:45', m: 'WiZBIHP', r: '107 A', c: 'brown' }, { n: 4, t: '10:40', m: 'JP', r: '209 C', c: 'purple' }, { n: 5, t: '11:40', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 6, t: '12:35', m: 'ZZW', r: '203 C', c: 'brown' }, { n: 7, t: '13:30', m: 'R', r: '203 C', c: 'green' }],
+					'wt': [{ n: 1, t: '8:00', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 2, t: '8:50', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 3, t: '9:45', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 4, t: '10:40', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 5, t: '11:40', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 6, t: '12:35', m: 'PiWDZOW', r: '016 A', c: 'brown' }, { n: 7, t: '13:30', m: 'PiWDZOW', r: '016 A', c: 'brown' }],
+					'sr': [{ n: 1, t: '8:00', m: 'WiZBIHP', r: '108 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 3, t: '9:45', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 4, t: '10:40', m: 'H', r: '104 C', c: 'green' }, { n: 5, t: '11:40', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 6, t: '12:35', m: 'JA', r: '108 C', c: 'purple' }, { n: 7, t: '13:30', m: 'JA', r: '203 C', c: 'purple' }, { n: 8, t: '14:20', m: 'JAZ', r: '203 C', c: 'purple' }, { n: 9, t: '15:10', m: 'Ed zdr', r: '105 C', c: 'purple' }],
+					'cz': [{ n: 1, t: '8:00', m: 'M', r: '101 A', c: 'purple' }, { n: 2, t: '8:50', m: 'ZM', r: '101 A', c: 'green' }, { n: 3, t: '9:45', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 4, t: '10:40', m: 'JP', r: '209 C', c: 'purple' }, { n: 5, t: '11:40', m: 'PŻCz', r: '013 A', c: 'green' }, { n: 6, t: '12:35', m: 'G', r: '105 C', c: 'green' }, { n: 7, t: '13:30', m: 'PiWDZOW', r: '016 A', c: 'brown' }],
+					'pi': [{ n: 1, t: '8:00', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 2, t: '8:50', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 3, t: '9:45', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 4, t: '10:40', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 5, t: '11:40', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }]
+				}
+			};
+
+			let currentPlan = 'TP';
+			let currentDay = getCurrentDayId();
+
+			function getCurrentDayId() {
+				const days = ['pi', 'pn', 'wt', 'sr', 'cz', 'pi', 'pi'];
+				const dayIndex = new Date().getDay();
+				return days[dayIndex];
+			}
+
+			function render() {
+				const container = document.getElementById('schedule-data');
+				container.innerHTML = '';
+				const lessons = plans[currentPlan][currentDay] || [];
+				const now = new Date();
+				const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+				lessons.forEach(l => {
+					const div = document.createElement('div');
+					const [hours, minutes] = l.t.split(':').map(Number);
+					const startTotalMinutes = hours * 60 + minutes;
+					const endTotalMinutes = startTotalMinutes + 45;
+
+					const endHours = Math.floor(endTotalMinutes / 60);
+					const endMins = endTotalMinutes % 60;
+					const endTimeStr = `${endHours}:${endMins < 10 ? '0' + endMins : endMins}`;
+
+					const isActive = currentMinutes >= startTotalMinutes && currentMinutes < endTotalMinutes;
+
+					div.className = `lesson ${l.c} ${isActive ? 'active-now' : ''}`;
+					div.setAttribute('data-num', l.n);
+					div.setAttribute('data-time', `${l.t} — ${endTimeStr}`);
+
+					let html = `<span>${l.m}</span>`;
+					if (isActive) {
+						const timeLeft = endTotalMinutes - currentMinutes;
+						html += `<div class="timer">До конца: ${timeLeft} мин</div>`;
+					}
+
+					div.innerHTML = html;
+					div.onclick = () => toggleRoom(l.r);
+					container.appendChild(div);
+				});
+			}
+
+			function switchPlan(id) {
+				currentPlan = id;
+				document.getElementById('page-title').innerText = id;
+				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+				document.getElementById('link-' + id).classList.add('active');
+				render();
+			}
+
+			function showDay(day) {
+				currentDay = day;
+				const dayMap = { pn: 'pn', wt: 'wt', sr: 'śr', cz: 'cz', pi: 'pi' };
+
+				document.querySelectorAll('.day-btn').forEach(b => {
+					b.classList.toggle('active', b.innerText.toLowerCase() === dayMap[day]);
+				});
+				render();
+			}
+
+			function toggleRoom(room) {
+				const popup = document.getElementById('room-info');
+				const span = popup.querySelector('span');
+				if (popup.classList.contains('show') && span.innerText === room) {
+					popup.classList.remove('show');
+				} else {
+					span.innerText = room;
+					popup.classList.add('show');
+				}
+			}
+
+			window.onload = () => {
+				showDay(currentDay);
+				setInterval(render, 30000);
+			};
+		</script>
+	</body>
+
+</html>
