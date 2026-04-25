@@ -1,10 +1,10 @@
 :root {
-	--bg: #080808;
-	--card: #141414;
-	--iris: #77608d;
-	--mocha: #794f45;
-	--sage: #7a956b;
-	--text: #ffffff;
+	--bg: #000000; /* Более глубокий черный фон */
+	--card: #1a1a1a; /* Более контрастный цвет карточек */
+	--iris: #9b7bbd; /* Более яркий фиолетовый */
+	--mocha: #a05f4d; /* Более насыщенный коричневый */
+	--sage: #8fbf7a; /* Более яркий зеленый */
+	--text: #f5f5f5; /* Более светлый текст */
 }
 
 * {
@@ -40,7 +40,7 @@ body {
 	z-index: 100;
 }
 .nav-links a {
-	color: #333;
+	color: #555; /* Более заметный цвет ссылок */
 	text-decoration: none;
 	font-weight: 900;
 	margin-bottom: 25px;
@@ -79,7 +79,7 @@ body {
 .day-btn {
 	background: var(--card);
 	border: 1px solid #222;
-	color: #555;
+	color: #777; /* Более контрастный текст кнопок */
 	padding: 15px;
 	border-radius: 12px;
 	cursor: pointer;
@@ -119,7 +119,7 @@ body {
 	bottom: 12px;
 	right: 25px;
 	font-size: 11px;
-	color: #555;
+	color: #777; /* Более заметный текст времени */
 	font-family: monospace;
 }
 .lesson.purple {
@@ -162,6 +162,12 @@ body {
 	font-weight: bold;
 	text-transform: uppercase;
 	animation: pulse 2s infinite;
+}
+
+/* Добавление стилей для отображения таймера на перемене */
+.timer.break {
+	background: var(--mocha); /* Цвет для таймера на перемене */
+	color: #fff;
 }
 
 @keyframes pulse {

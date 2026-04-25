@@ -54,7 +54,7 @@
 				'TI': {
 					'pn': [{ n: 1, t: '8:00', m: 'Ed zdr', r: '105 C', c: 'purple' }, { n: 2, t: '8:50', m: 'BIZ', r: '020 A', c: 'brown' }, { n: 3, t: '9:45', m: 'H', r: '104 C', c: 'green' }, { n: 4, t: '10:40', m: 'WF', r: 'SG1/SG6', c: 'purple' }, { n: 5, t: '11:40', m: 'R', r: '110 C', c: 'green' }, { n: 6, t: '12:35', m: 'Fot Art', r: '017 C', c: 'purple' }, { n: 7, t: '13:30', m: 'JN', r: '202 C', c: 'green' }, { n: 8, t: '14:20', m: 'JA', r: '108 C', c: 'purple' }],
 					'wt': [{ n: 2, t: '8:50', m: 'JP', r: '109 A', c: 'brown' }, { n: 3, t: '9:45', m: 'JP', r: '109 A', c: 'brown' }, { n: 4, t: '10:40', m: 'SUTK', r: '114 A', c: 'green' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JA', r: '108 C', c: 'purple' }, { n: 7, t: '13:30', m: 'SO', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'DINU TK', r: '114 A', c: 'green' }],
-					'sr': [{ n: 1, t: '8:00', m: 'ZZW', r: '202 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG1/SG4', c: 'purple' }, { n: 3, t: '9:45', m: 'WF', r: 'SG1/SG4', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'brown' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
+					'sr': [{ n: 1, t: '8:00', m: 'ZZW', r: '202 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG6/SG4', c: 'purple' }, { n: 3, t: '9:45', m: 'WF', r: 'SG6/SG4', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'brown' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
 					'cz': [{ n: 1, t: '8:00', m: 'JN', r: '202 C', c: 'green' }, { n: 2, t: '8:50', m: 'DINU TK', r: '105 A', c: 'green' }, { n: 3, t: '9:45', m: 'CH', r: '105 C', c: 'green' }, { n: 4, t: '10:40', m: 'F', r: '107 A', c: 'brown' }, { n: 5, t: '11:40', m: 'SO', r: '107 A', c: 'green' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }, { n: 7, t: '13:30', m: 'I', r: '108 C', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
 					'pi': [{ n: 1, t: '8:00', m: 'G', r: '105 C', c: 'green' }, { n: 2, t: '8:50', m: 'SO', r: '114 A', c: 'green' }, { n: 3, t: '9:45', m: 'SO', r: '114 A', c: 'green' }, { n: 4, t: '10:40', m: 'EDB', r: '6 w', c: 'brown' }, { n: 5, t: '11:40', m: 'I', r: '108 C', c: 'green' }, { n: 6, t: '12:35', m: 'UTKiZ BHP', r: '114 A', c: 'green' }]
 				},
@@ -94,6 +94,7 @@
 					const endTimeStr = `${endHours}:${endMins < 10 ? '0' + endMins : endMins}`;
 
 					const isActive = currentMinutes >= startTotalMinutes && currentMinutes < endTotalMinutes;
+					const isBreak = currentMinutes < startTotalMinutes && currentMinutes >= (startTotalMinutes - 10);
 
 					div.className = `lesson ${l.c} ${isActive ? 'active-now' : ''}`;
 					div.setAttribute('data-num', l.n);
@@ -103,6 +104,9 @@
 					if (isActive) {
 						const timeLeft = endTotalMinutes - currentMinutes;
 						html += `<div class="timer">До конца: ${timeLeft} мин</div>`;
+					} else if (isBreak) {
+						const timeUntil = startTotalMinutes - currentMinutes;
+						html += `<div class="timer break">До начала: ${timeUntil} мин</div>`;
 					}
 
 					div.innerHTML = html;
@@ -113,9 +117,10 @@
 
 			function switchPlan(id) {
 				currentPlan = id;
+				localStorage.setItem('currentPlan', id); // Сохранение текущего раздела в localStorage
 				document.getElementById('page-title').innerText = id;
-				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-				document.getElementById('link-' + id).classList.add('active');
+				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active')); // Удаление активного класса у всех ссылок
+				document.getElementById('link-' + id).classList.add('active'); // Добавление активного класса только для текущего раздела
 				render();
 			}
 
@@ -141,6 +146,15 @@
 			}
 
 			window.onload = () => {
+				const savedPlan = localStorage.getItem('currentPlan');
+				if (savedPlan && plans[savedPlan]) {
+					currentPlan = savedPlan; // Установка сохраненного раздела
+				} else {
+					currentPlan = 'TP'; // Раздел по умолчанию
+				}
+				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active')); // Удаление активного класса у всех ссылок при загрузке
+				document.getElementById('link-' + currentPlan).classList.add('active'); // Добавление активного класса для сохраненного раздела
+				document.getElementById('page-title').innerText = currentPlan;
 				showDay(currentDay);
 				setInterval(render, 30000);
 			};
