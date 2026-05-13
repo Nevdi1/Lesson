@@ -1,10 +1,18 @@
 :root {
-	--bg: #000000; /* Более глубокий черный фон */
-	--card: #1a1a1a; /* Более контрастный цвет карточек */
-	--iris: #9b7bbd; /* Более яркий фиолетовый */
-	--mocha: #a05f4d; /* Более насыщенный коричневый */
-	--sage: #8fbf7a; /* Более яркий зеленый */
-	--text: #f5f5f5; /* Более светлый текст */
+	--bg: #1f1f1e;
+	--card: #2c2c2a;
+	--card-hover: #363634;
+	--headline: #fffffe;
+	--paragraph: #94a1b2;
+	--primary: #9b7bbd;
+	/* Фиолетовый */
+	--accent: #8fbf7a;
+	/* Зеленый */
+	--warning: #a05f4d;
+	/* Оранжевый */
+	--secondary: #72757e;
+	--text: #fffffe;
+	--shadow: rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -12,8 +20,9 @@
 	margin: 0;
 	padding: 0;
 }
+
 body {
-	font-family: -apple-system, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 	background: var(--bg);
 	color: var(--text);
 	overflow-x: hidden;
@@ -24,11 +33,10 @@ body {
 	width: 100%;
 }
 
-/* SIDEBAR */
 .sidebar {
 	width: 70px;
 	height: 100vh;
-	background: #000;
+	background: var(--bg);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -36,204 +44,284 @@ body {
 	padding: 30px 0;
 	position: sticky;
 	top: 0;
-	border-right: 1px solid #1a1a1a;
+	border-right: 1px solid var(--card);
 	z-index: 100;
 }
-.nav-links a {
-	color: #555; /* Более заметный цвет ссылок */
-	text-decoration: none;
-	font-weight: 900;
-	margin-bottom: 25px;
-	display: block;
-}
-.nav-links a.active {
-	color: var(--iris);
-}
-.logo-btn {
-	text-decoration: none;
-	font-size: 20px;
-	margin-bottom: 15px;
-	display: block;
+
+.nav-links {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-/* CONTENT - Убран ограничивающий max-width */
+.nav-links a {
+	color: var(--secondary);
+	text-decoration: none;
+	font-weight: 900;
+	font-size: 15px;
+	margin-bottom: 25px;
+	transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+	color: var(--headline);
+}
+
+.nav-links a.active {
+	color: var(--primary);
+}
+
+.school-logos {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.logo-btn {
+	text-decoration: none;
+	font-size: 22px;
+	transition: opacity 0.2s ease;
+}
+
+.logo-btn:hover {
+	opacity: 0.7;
+}
+
 .content {
 	flex: 1;
 	padding: 30px;
-	position: relative;
 	width: 100%;
 }
+
 .header h1 {
-	font-size: 32px;
+	font-size: 34px;
 	font-weight: 900;
+	color: var(--headline);
 	margin-bottom: 20px;
 }
 
-/* DAYS GRID */
 .days-grid {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	gap: 10px;
+	gap: 12px;
 	margin-bottom: 30px;
 }
+
 .day-btn {
 	background: var(--card);
-	border: 1px solid #222;
-	color: #777; /* Более контрастный текст кнопок */
+	border: 1px solid transparent;
+	color: var(--paragraph);
 	padding: 15px;
 	border-radius: 12px;
 	cursor: pointer;
-	font-weight: bold;
-	transition: 0.2s;
-}
-.day-btn.active {
-	background: var(--iris);
-	color: #fff;
-	border-color: var(--iris);
+	font-weight: 700;
+	font-size: 14px;
+	transition: all 0.2s ease;
 }
 
-/* LESSON CARD */
+.day-btn:hover {
+	background: var(--card-hover);
+	color: var(--headline);
+}
+
+.day-btn.active {
+	background: var(--primary);
+	color: var(--headline);
+}
+
+.schedule-container {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	width: 100%;
+}
+
 .lesson {
 	background: var(--card);
-	margin-bottom: 12px;
 	padding: 20px 25px;
-	border-radius: 14px;
+	border-radius: 16px;
 	border-left: 5px solid transparent;
 	display: flex;
 	align-items: center;
 	cursor: pointer;
 	position: relative;
-	min-height: 90px;
-	transition: 0.3s;
+	min-height: 87px;
+	transition: all 0.2s ease;
+	width: 100%;
 }
+
+.lesson:hover {
+	background: var(--card-hover);
+}
+
+.lesson span {
+	font-size: 18px;
+	font-weight: 500;
+	color: var(--headline);
+	transition: font-weight 0.2s ease;
+}
+
 .lesson::before {
 	content: attr(data-num);
 	font-weight: 900;
-	color: var(--iris);
+	color: var(--primary);
 	margin-right: 25px;
-	font-size: 1.3rem;
+	font-size: 1.4rem;
+	min-width: 25px;
 }
+
 .lesson::after {
 	content: attr(data-time);
 	position: absolute;
 	bottom: 12px;
 	right: 25px;
-	font-size: 11px;
-	color: #777; /* Более заметный текст времени */
+	font-size: 12px;
+	color: var(--paragraph);
 	font-family: monospace;
 }
+
+/* Цвета категорий */
 .lesson.purple {
-	border-left-color: var(--iris);
+	border-left-color: var(--primary);
 }
-.lesson.brown {
-	border-left-color: var(--mocha);
-}
+
 .lesson.green {
-	border-left-color: var(--sage);
+	border-left-color: var(--accent);
 }
 
-/* ACTIVE STATE */
+.lesson.orange {
+	border-left-color: var(--warning);
+}
+
+/* Состояние активного урока */
 .lesson.active-now {
-	background: #1e1e1e !important;
-	border: 1px solid var(--iris) !important;
-	border-left: 5px solid var(--iris) !important;
-	box-shadow: 0 0 25px rgba(119, 96, 141, 0.4);
-	z-index: 5;
-}
-.lesson.active-now span {
-	color: #ffffff !important;
-	font-weight: 800;
-}
-.lesson.active-now::after {
-	color: #ffffff !important;
-	font-weight: bold;
+	background: var(--card-hover) !important;
+	border: 1px solid var(--primary) !important;
+	border-left: 5px solid var(--primary) !important;
 }
 
-/* TIMER */
+.lesson.active-now span {
+	font-weight: 800;
+	/* Жирный текст предмета во время урока */
+}
+
+.lesson.active-now::after {
+	color: #ffffff;
+	/* Белое время во время урока */
+	font-weight: 700;
+}
+
 .timer {
 	position: absolute;
-	top: 12px;
+	top: 15px;
 	right: 25px;
-	font-size: 10px;
-	background: var(--iris);
-	color: #fff;
-	padding: 4px 10px; /* Увеличен внутренний отступ */
+	font-size: 11px;
+	background: var(--primary);
+	color: var(--headline);
+	padding: 4px 10px;
 	border-radius: 20px;
-	font-weight: bold;
 	text-transform: uppercase;
-	animation: pulse 2s infinite;
+	font-weight: 500;
 }
 
-/* Добавление стилей для отображения таймера на перемене */
-.timer.break {
-	background: var(--mocha); /* Цвет для таймера на перемене */
-	color: #fff;
-}
 
-@keyframes pulse {
-	0% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.6;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
-/* POPUP */
 .room-popup {
 	position: fixed;
 	bottom: 40px;
 	left: 50%;
 	transform: translateX(-50%);
-	background: var(--sage);
-	color: #000;
+	background: var(--accent);
+	color: #1f1f1e;
 	padding: 12px 30px;
-	border-radius: 25px;
+	border-radius: 50px;
 	font-weight: 900;
 	display: none;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 10px 30px var(--shadow);
 	z-index: 1000;
 }
+
 .room-popup.show {
 	display: block;
+	animation: slideUp 0.3s ease;
 }
 
-/* MOBILE */
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translate(-50%, 20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--card);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--secondary);
+}
+
 @media (max-width: 768px) {
 	.container {
 		flex-direction: column;
-		margin: 0;
 	}
+
 	.sidebar {
 		width: 100%;
-		height: 70px;
+		height: 60px;
 		flex-direction: row;
-		position: fixed;
-		bottom: 0;
-		padding: 0 30px;
-		z-index: 1100;
+		padding: 0 20px;
 		border-right: none;
-		border-top: 1px solid #1a1a1a;
+		border-bottom: 1px solid var(--card);
 	}
+
 	.nav-links {
-		display: flex;
-		gap: 30px;
+		flex-direction: row;
+		gap: 25px;
 	}
+
 	.nav-links a {
 		margin-bottom: 0;
 	}
+
+	.school-logos {
+		flex-direction: row;
+		gap: 15px;
+	}
+
 	.content {
-		padding: 20px 15px 100px 15px;
+		padding: 20px 15px;
 	}
+
 	.days-grid {
-		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
 	}
+
+	.day-btn {
+		padding: 10px 5px;
+		font-size: 12px;
+	}
+
+	.lesson {
+		min-height: 80px;
+	}
+
 	.timer {
 		top: auto;
-		bottom: 38px;
-		right: 25px;
-	} /* Отступ таймера снизу на мобилках */
+		bottom: 35px;
+		right: 15px;
+	}
 }

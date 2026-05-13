@@ -17,8 +17,8 @@
 					<a href="#" id="link-BK" onclick="switchPlan('BK')">BK</a>
 				</nav>
 				<div class="school-logos">
-					<a href="https://zsppuck.edupage.org/timetable/view.php?num=102&class=-334" target="_blank"
-						class="logo-btn">🏫</a>
+					<a id="timetable-link" href="https://zsppuck.edupage.org/timetable/view.php?num=103&class=-334"
+						target="_blank" class="logo-btn">🏫</a>
 					<a href="https://zsppuck.edupage.org/substitution/" target="_blank" class="logo-btn">🎓</a>
 				</div>
 			</aside>
@@ -37,7 +37,6 @@
 				</div>
 
 				<div id="schedule-data" class="schedule-container"></div>
-
 				<div id="room-info" class="room-popup"><span>-</span></div>
 			</main>
 		</div>
@@ -45,26 +44,32 @@
 		<script>
 			const plans = {
 				'TP': {
-					'pn': [{ n: 1, t: '8:00', m: 'Ed zdr', r: '105 C', c: 'purple' }, { n: 2, t: '8:50', m: 'BIZ', r: '020 A', c: 'brown' }, { n: 3, t: '9:45', m: 'H', r: '104 C', c: 'green' }, { n: 4, t: '10:40', m: 'WF', r: 'SG1', c: 'purple' }, { n: 5, t: '11:40', m: 'R', r: '110 C', c: 'green' }, { n: 6, t: '12:35', m: 'Fot Art', r: '017 C', c: 'purple' }],
-					'wt': [{ n: 1, t: '8:00', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 2, t: '8:50', m: 'JP', r: '109 A', c: 'brown' }, { n: 3, t: '9:45', m: 'JP', r: '109 A', c: 'brown' }, { n: 4, t: '10:40', m: 'WIAI', r: '113 A', c: 'green' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'SO', r: '114 A', c: 'green' }, { n: 7, t: '13:30', m: 'JN', r: '109 C', c: 'green' }],
-					'sr': [{ n: 1, t: '8:00', m: 'ZZW', r: '202 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG1', c: 'purple' }, { n: 3, t: '9:45', m: 'WF', r: 'SG1', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'brown' }, { n: 7, t: '13:30', m: 'I', r: '111 A', c: 'green' }],
-					'cz': [{ n: 1, t: '8:00', m: 'SK', r: '113 A', c: 'green' }, { n: 2, t: '8:50', m: 'JN', r: '109 C', c: 'green' }, { n: 3, t: '9:45', m: 'CH', r: '105 C', c: 'green' }, { n: 4, t: '10:40', m: 'F', r: '107 A', c: 'brown' }, { n: 5, t: '11:40', m: 'JA', r: '209 K', c: 'purple' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '107 A', c: 'green' }, { n: 8, t: '14:20', m: 'WIAI', r: '113 A', c: 'green' }],
-					'pi': [{ n: 1, t: '8:00', m: 'G', r: '105 C', c: 'green' }, { n: 2, t: '8:50', m: 'SBD', r: '111 A', c: 'green' }, { n: 3, t: '9:45', m: 'SK', r: '113 A', c: 'green' }, { n: 4, t: '10:40', m: 'EDB', r: '6 w', c: 'brown' }, { n: 5, t: '11:40', m: 'SO', r: '114 A', c: 'green' }, { n: 6, t: '12:35', m: 'WIAI', r: '113 A', c: 'green' }, { n: 7, t: '13:30', m: 'JA', r: '207 C', c: 'purple' }]
+					'pn': [{ n: 1, t: '08:00', m: 'Ed zdr', r: '105 C', c: 'purple' }, { n: 2, t: '08:50', m: 'BIZ', r: '020 A', c: 'orange' }, { n: 3, t: '09:45', m: 'H', r: '104 C', c: 'green' }, { n: 4, t: '10:40', m: 'WF', r: 'SG1', c: 'purple' }, { n: 5, t: '11:40', m: 'R', r: '110 C', c: 'green' }, { n: 6, t: '12:35', m: 'Fot Art', r: '017 C', c: 'purple' }],
+					'wt': [{ n: 1, t: '08:00', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 2, t: '08:50', m: 'JP', r: '109 A', c: 'orange' }, { n: 3, t: '09:45', m: 'JP', r: '109 A', c: 'orange' }, { n: 4, t: '10:40', m: 'WIAI', r: '113 A', c: 'green' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'SO', r: '114 A', c: 'green' }, { n: 7, t: '13:30', m: 'JN', r: '109 C', c: 'green' }, { n: 8, t: '14:20', m: 'I', r: '111 A', c: 'green' }],
+					'sr': [{ n: 1, t: '08:00', m: 'ZZW', r: '202 C', c: 'orange' }, { n: 2, t: '08:50', m: 'WF', r: 'SG1', c: 'purple' }, { n: 3, t: '09:45', m: 'WF', r: 'SG1', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'orange' }, { n: 7, t: '13:30', m: 'I', r: '111 A', c: 'green' }, { n: 8, t: '14:20', m: 'SBD', r: '111 A', c: 'green' }],
+					'cz': [{ n: 1, t: '08:00', m: 'SK', r: '113 A', c: 'green' }, { n: 2, t: '08:50', m: 'JN', r: '109 C', c: 'green' }, { n: 3, t: '09:45', m: 'CH', r: '105 C', c: 'green' }, { n: 4, t: '10:40', m: 'F', r: '107 A', c: 'orange' }, { n: 5, t: '11:40', m: 'JA', r: '209 K', c: 'purple' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '107 A', c: 'green' }, { n: 8, t: '14:20', m: 'WIAI', r: '113 A', c: 'green' }],
+					'pi': [{ n: 1, t: '08:00', m: 'G', r: '105 C', c: 'green' }, { n: 2, t: '08:50', m: 'SBD', r: '111 A', c: 'green' }, { n: 3, t: '09:45', m: 'SK', r: '113 A', c: 'green' }, { n: 4, t: '10:40', m: 'EDB', r: '6 w', c: 'orange' }, { n: 5, t: '11:40', m: 'SO', r: '114 A', c: 'green' }, { n: 6, t: '12:35', m: 'WIAI', r: '113 A', c: 'green' }, { n: 7, t: '13:30', m: 'JA', r: '207 C', c: 'purple' }]
 				},
 				'TI': {
-					'pn': [{ n: 1, t: '8:00', m: 'Ed zdr', r: '105 C', c: 'purple' }, { n: 2, t: '8:50', m: 'BIZ', r: '020 A', c: 'brown' }, { n: 3, t: '9:45', m: 'H', r: '104 C', c: 'green' }, { n: 4, t: '10:40', m: 'WF', r: 'SG1/SG6', c: 'purple' }, { n: 5, t: '11:40', m: 'R', r: '110 C', c: 'green' }, { n: 6, t: '12:35', m: 'Fot Art', r: '017 C', c: 'purple' }, { n: 7, t: '13:30', m: 'JN', r: '202 C', c: 'green' }, { n: 8, t: '14:20', m: 'JA', r: '108 C', c: 'purple' }],
-					'wt': [{ n: 2, t: '8:50', m: 'JP', r: '109 A', c: 'brown' }, { n: 3, t: '9:45', m: 'JP', r: '109 A', c: 'brown' }, { n: 4, t: '10:40', m: 'SUTK', r: '114 A', c: 'green' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JA', r: '108 C', c: 'purple' }, { n: 7, t: '13:30', m: 'SO', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'DINU TK', r: '114 A', c: 'green' }],
-					'sr': [{ n: 1, t: '8:00', m: 'ZZW', r: '202 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG6/SG4', c: 'purple' }, { n: 3, t: '9:45', m: 'WF', r: 'SG6/SG4', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'brown' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
-					'cz': [{ n: 1, t: '8:00', m: 'JN', r: '202 C', c: 'green' }, { n: 2, t: '8:50', m: 'DINU TK', r: '105 A', c: 'green' }, { n: 3, t: '9:45', m: 'CH', r: '105 C', c: 'green' }, { n: 4, t: '10:40', m: 'F', r: '107 A', c: 'brown' }, { n: 5, t: '11:40', m: 'SO', r: '107 A', c: 'green' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }, { n: 7, t: '13:30', m: 'I', r: '108 C', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
-					'pi': [{ n: 1, t: '8:00', m: 'G', r: '105 C', c: 'green' }, { n: 2, t: '8:50', m: 'SO', r: '114 A', c: 'green' }, { n: 3, t: '9:45', m: 'SO', r: '114 A', c: 'green' }, { n: 4, t: '10:40', m: 'EDB', r: '6 w', c: 'brown' }, { n: 5, t: '11:40', m: 'I', r: '108 C', c: 'green' }, { n: 6, t: '12:35', m: 'UTKiZ BHP', r: '114 A', c: 'green' }]
+					'pn': [{ n: 1, t: '08:00', m: 'Ed zdr', r: '105 C', c: 'purple' }, { n: 2, t: '08:50', m: 'BIZ', r: '020 A', c: 'orange' }, { n: 3, t: '09:45', m: 'H', r: '104 C', c: 'green' }, { n: 4, t: '10:40', m: 'WF', r: 'SG1/SG6', c: 'purple' }, { n: 5, t: '11:40', m: 'R', r: '110 C', c: 'green' }, { n: 6, t: '12:35', m: 'Fot Art', r: '017 C', c: 'purple' }, { n: 7, t: '13:30', m: 'JN', r: '202 C', c: 'green' }, { n: 8, t: '14:20', m: 'JA', r: '108 C', c: 'purple' }],
+					'wt': [{ n: 2, t: '08:50', m: 'JP', r: '109 A', c: 'orange' }, { n: 3, t: '09:45', m: 'JP', r: '109 A', c: 'orange' }, { n: 4, t: '10:40', m: 'SUTK', r: '114 A', c: 'green' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JA', r: '108 C', c: 'purple' }, { n: 7, t: '13:30', m: 'SO', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'DINU TK', r: '114 A', c: 'green' }],
+					'sr': [{ n: 1, t: '08:00', m: 'ZZW', r: '202 C', c: 'orange' }, { n: 2, t: '08:50', m: 'WF', r: 'SG6/SG4', c: 'purple' }, { n: 3, t: '09:45', m: 'WF', r: 'SG6/SG4', c: 'purple' }, { n: 4, t: '10:40', m: 'M', r: '017 C', c: 'purple' }, { n: 5, t: '11:40', m: 'M', r: '017 C', c: 'purple' }, { n: 6, t: '12:35', m: 'JP', r: '109 A', c: 'orange' }, { n: 7, t: '13:30', m: 'UTKiZ BHP', r: '114 A', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
+					'cz': [{ n: 1, t: '08:00', m: 'JN', r: '202 C', c: 'green' }, { n: 2, t: '08:50', m: 'DINU TK', r: '105 A', c: 'green' }, { n: 3, t: '09:45', m: 'CH', r: '105 C', c: 'green' }, { n: 4, t: '10:40', m: 'F', r: '107 A', c: 'orange' }, { n: 5, t: '11:40', m: 'SO', r: '107 A', c: 'green' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }, { n: 7, t: '13:30', m: 'I', r: '108 C', c: 'green' }, { n: 8, t: '14:20', m: 'UTKiZ BHP', r: '114 A', c: 'green' }],
+					'pi': [{ n: 1, t: '08:00', m: 'G', r: '105 C', c: 'green' }, { n: 2, t: '08:50', m: 'SO', r: '114 A', c: 'green' }, { n: 3, t: '09:45', m: 'SO', r: '114 A', c: 'green' }, { n: 4, t: '10:40', m: 'EDB', r: '6 w', c: 'orange' }, { n: 5, t: '11:40', m: 'I', r: '108 C', c: 'green' }, { n: 6, t: '12:35', m: 'UTKiZ BHP', r: '114 A', c: 'green' }]
 				},
 				'BK': {
-					'pn': [{ n: 1, t: '8:00', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 2, t: '8:50', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 3, t: '9:45', m: 'WiZBIHP', r: '107 A', c: 'brown' }, { n: 4, t: '10:40', m: 'JP', r: '209 C', c: 'purple' }, { n: 5, t: '11:40', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 6, t: '12:35', m: 'ZZW', r: '203 C', c: 'brown' }, { n: 7, t: '13:30', m: 'R', r: '203 C', c: 'green' }],
-					'wt': [{ n: 1, t: '8:00', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 2, t: '8:50', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 3, t: '9:45', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 4, t: '10:40', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 5, t: '11:40', m: 'PTWPG', r: '002 C', c: 'brown' }, { n: 6, t: '12:35', m: 'PiWDZOW', r: '016 A', c: 'brown' }, { n: 7, t: '13:30', m: 'PiWDZOW', r: '016 A', c: 'brown' }],
-					'sr': [{ n: 1, t: '8:00', m: 'WiZBIHP', r: '108 C', c: 'brown' }, { n: 2, t: '8:50', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 3, t: '9:45', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 4, t: '10:40', m: 'H', r: '104 C', c: 'green' }, { n: 5, t: '11:40', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 6, t: '12:35', m: 'JA', r: '108 C', c: 'purple' }, { n: 7, t: '13:30', m: 'JA', r: '203 C', c: 'purple' }, { n: 8, t: '14:20', m: 'JAZ', r: '203 C', c: 'purple' }, { n: 9, t: '15:10', m: 'Ed zdr', r: '105 C', c: 'purple' }],
-					'cz': [{ n: 1, t: '8:00', m: 'M', r: '101 A', c: 'purple' }, { n: 2, t: '8:50', m: 'ZM', r: '101 A', c: 'green' }, { n: 3, t: '9:45', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 4, t: '10:40', m: 'JP', r: '209 C', c: 'purple' }, { n: 5, t: '11:40', m: 'PŻCz', r: '013 A', c: 'green' }, { n: 6, t: '12:35', m: 'G', r: '105 C', c: 'green' }, { n: 7, t: '13:30', m: 'PiWDZOW', r: '016 A', c: 'brown' }],
-					'pi': [{ n: 1, t: '8:00', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 2, t: '8:50', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 3, t: '9:45', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 4, t: '10:40', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 5, t: '11:40', m: 'PTWPG', r: '018 A', c: 'brown' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }]
+					'pn': [{ n: 1, t: '08:00', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 2, t: '08:50', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 3, t: '09:45', m: 'WiZBIHP', r: '107 A', c: 'orange' }, { n: 4, t: '10:40', m: 'JP', r: '209 C', c: 'purple' }, { n: 5, t: '11:40', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 6, t: '12:35', m: 'ZZW', r: '203 C', c: 'orange' }, { n: 7, t: '13:30', m: 'R', r: '203 C', c: 'green' }],
+					'wt': [{ n: 1, t: '08:00', m: 'PTWPG', r: '002 C', c: 'orange' }, { n: 2, t: '08:50', m: 'PTWPG', r: '002 C', c: 'orange' }, { n: 3, t: '09:45', m: 'PTWPG', r: '002 C', c: 'orange' }, { n: 4, t: '10:40', m: 'PTWPG', r: '002 C', c: 'orange' }, { n: 5, t: '11:40', m: 'PTWPG', r: '002 C', c: 'orange' }, { n: 6, t: '12:35', m: 'PiWDZOW', r: '016 A', c: 'orange' }, { n: 7, t: '13:30', m: 'PiWDZOW', r: '016 A', c: 'orange' }],
+					'sr': [{ n: 1, t: '08:00', m: 'WiZBIHP', r: '108 C', c: 'orange' }, { n: 2, t: '08:50', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 3, t: '09:45', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 4, t: '10:40', m: 'H', r: '104 C', c: 'green' }, { n: 5, t: '11:40', m: 'TGZT', r: '013 A', c: 'purple' }, { n: 6, t: '12:35', m: 'JA', r: '108 C', c: 'purple' }, { n: 7, t: '13:30', m: 'JAZ', r: '203 C', c: 'purple' }, { n: 8, t: '14:20', m: 'Ed zdr', r: '105 C', c: 'purple' }],
+					'cz': [{ n: 1, t: '08:00', m: 'M', r: '101 A', c: 'purple' }, { n: 2, t: '08:50', m: 'ZM', r: '101 A', c: 'green' }, { n: 3, t: '09:45', m: 'WF', r: 'SG6/SG2', c: 'green' }, { n: 4, t: '10:40', m: 'JP', r: '209 C', c: 'purple' }, { n: 5, t: '11:40', m: 'PŻCz', r: '013 A', c: 'green' }, { n: 6, t: '12:35', m: 'G', r: '105 C', c: 'green' }],
+					'pi': [{ n: 1, t: '08:00', m: 'PTWPG', r: '018 A', c: 'orange' }, { n: 2, t: '08:50', m: 'PTWPG', r: '018 A', c: 'orange' }, { n: 3, t: '09:45', m: 'PTWPG', r: '018 A', c: 'orange' }, { n: 4, t: '10:40', m: 'PTWPG', r: '018 A', c: 'orange' }, { n: 5, t: '11:40', m: 'PTWPG', r: '018 A', c: 'orange' }, { n: 6, t: '12:35', m: 'B', r: '205 C', c: 'purple' }]
 				}
+			};
+
+			const timetableLinks = {
+				'TP': 'https://zsppuck.edupage.org/timetable/view.php?num=103&class=-334',
+				'TI': 'https://zsppuck.edupage.org/timetable/view.php?num=103&class=-330',
+				'BK': 'https://zsppuck.edupage.org/timetable/view.php?num=103&class=-309'
 			};
 
 			let currentPlan = 'TP';
@@ -117,17 +122,17 @@
 
 			function switchPlan(id) {
 				currentPlan = id;
-				localStorage.setItem('currentPlan', id); // Сохранение текущего раздела в localStorage
+				localStorage.setItem('currentPlan', id);
 				document.getElementById('page-title').innerText = id;
-				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active')); // Удаление активного класса у всех ссылок
-				document.getElementById('link-' + id).classList.add('active'); // Добавление активного класса только для текущего раздела
+				document.getElementById('timetable-link').href = timetableLinks[id];
+				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+				document.getElementById('link-' + id).classList.add('active');
 				render();
 			}
 
 			function showDay(day) {
 				currentDay = day;
 				const dayMap = { pn: 'pn', wt: 'wt', sr: 'śr', cz: 'cz', pi: 'pi' };
-
 				document.querySelectorAll('.day-btn').forEach(b => {
 					b.classList.toggle('active', b.innerText.toLowerCase() === dayMap[day]);
 				});
@@ -147,13 +152,10 @@
 
 			window.onload = () => {
 				const savedPlan = localStorage.getItem('currentPlan');
-				if (savedPlan && plans[savedPlan]) {
-					currentPlan = savedPlan; // Установка сохраненного раздела
-				} else {
-					currentPlan = 'TP'; // Раздел по умолчанию
-				}
-				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active')); // Удаление активного класса у всех ссылок при загрузке
-				document.getElementById('link-' + currentPlan).classList.add('active'); // Добавление активного класса для сохраненного раздела
+				currentPlan = (savedPlan && plans[savedPlan]) ? savedPlan : 'TP';
+				document.getElementById('timetable-link').href = timetableLinks[currentPlan];
+				document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+				document.getElementById('link-' + currentPlan).classList.add('active');
 				document.getElementById('page-title').innerText = currentPlan;
 				showDay(currentDay);
 				setInterval(render, 30000);
