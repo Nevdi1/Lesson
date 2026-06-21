@@ -286,6 +286,10 @@ body {
 		padding: 0 20px;
 		border-right: none;
 		border-bottom: 1px solid var(--card);
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
 	}
 
 	.nav-links {
